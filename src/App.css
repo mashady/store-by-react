@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
+
+/** global styles */
+/** 
+ * sec : #rgb(122 112 104)
+ * first : #252525
+ * 
+ */
+.bg-main {
+  background-color: #252525;
+}
+.bg-sec {
+  background-color: rgb(122 112 104);
+}
+.text-main {
+  color: #252525;
+}
+.text-sec {
+  color: rgb(122 112 104);
+}
+.text-heart {
+  color: #dc3545 !important;
+}
