@@ -2,18 +2,24 @@ import Rating from "react-rating"
 import { FaStar } from "react-icons/fa"
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { publicRequest } from "../requestMethod"
-import { useAppDispatch } from "../app/hooks"
-import { addProduct } from "../features/cart/cartSlice"
+import { publicRequest, userRequest } from "../requestMethod"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 
+import {
+  addProduct,
+  selectProducts,
+  selectQuantity,
+} from "../features/cart/cartSlice"
 let prod_placeholder =
   "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
 export default function Product() {
+  const cartProd = useAppSelector(selectProducts)
+  let cartQuant = useAppSelector(selectQuantity)
   const location = useLocation()
   const id = location.pathname.split("/")[2]
   const [product, setProduct] = useState([])
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(2)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
   const quantityValue = Number(quantity) || 0
@@ -40,14 +46,28 @@ export default function Product() {
       setQuantity(quantity + 1)
     }
   }
-  const handleAddProduct = () => {
-    console.log("added")
-    dispatch(
-      addProduct({
-        products: product,
-        quantity: quantity,
-      }),
-    )
+  const handleAddProduct = async () => {
+    if (cartCheck(product._id)) {
+      // increase quantity
+
+      dispatch(addProduct({ ...product, prodQuantity: 2 }))
+    } else {
+      dispatch(
+        addProduct({
+          products: { ...product, prodQuantity: 1 },
+          quantity: quantity,
+        }),
+      )
+      //console.log(cartQuant) // i cannot see you
+    }
+  }
+  let cartCheck = x => {
+    for (let i = 0; cartProd.length > 0; i++) {
+      if (cartProd[i]._id === x) {
+        return true
+      }
+    }
+    return false
   }
   return (
     <>
@@ -95,6 +115,7 @@ export default function Product() {
           </div>
           <div>
             <span className="text font-bold text-main">Details</span>
+            {cartQuant}
             <p className="text-sec">{product.desc}</p>
           </div>
         </div>

@@ -31,9 +31,7 @@ export default function Navbar() {
             <li className="mr-4 cursor-pointer">
               <Link to="/categories">categories</Link>
             </li>
-            <li className="mr-4 cursor-pointer">
-              <Link to="/brands">brands</Link>
-            </li>
+
             <li className="mr-4 cursor-pointer">
               <Link to="/wishlist">wishlist</Link>
             </li>

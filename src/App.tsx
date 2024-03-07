@@ -7,6 +7,8 @@ import Products from "./pages/Products"
 import Cart from "./pages/Cart"
 import Wishlist from "./components/Wishlist"
 import CatList from "./components/CatList"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -26,6 +28,10 @@ const App = () => {
           element: <Products />,
         },
         {
+          path: "/products",
+          element: <Products />,
+        },
+        {
           path: "/categories",
           element: <CatList />,
         },
@@ -36,6 +42,14 @@ const App = () => {
         {
           path: "/wishlist",
           element: <Wishlist />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

@@ -1,5 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
+import Product from "../../pages/Product"
+import { log } from "console"
 
 export interface CartSliceState {
   products: any
@@ -24,7 +26,7 @@ export const cartSlice = createAppSlice({
     addProduct: (state, action) => {
       state.quantity += 1
       state.products.push(action.payload.products)
-      console.log(action.payload)
+      console.log(action.payload.products._id)
 
       state.total += action.payload.products.price * action.payload.quantity
     },

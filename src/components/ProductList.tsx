@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { FaHeart } from "react-icons/fa"
 import ProductItem from "./ProductItem"
 
 export default function ProductList({ cat, filters, sort }: any) {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
+  const location = useLocation()
 
   useEffect(() => {
+    if (location.pathname.split("/")[2] === undefined) {
+      console.log("No location")
+      console.log(location.pathname)
+    } else {
+      console.log(location.pathname.split("/")[2])
+    }
     const getProducts = async () => {
       try {
         const res = await axios.get(
@@ -59,9 +66,12 @@ export default function ProductList({ cat, filters, sort }: any) {
           ? filteredProducts.map((item, i) => (
               <ProductItem item={item} key={i} />
             ))
-          : products
-              .slice(0, 8)
-              .map((item, i) => <ProductItem item={item} key={i} />)}
+          : location.pathname.split("/")[2] === undefined &&
+              location.pathname.split("/")[1] === "products"
+            ? products.map((item, i) => <ProductItem item={item} key={i} />)
+            : products
+                .slice(0, 8)
+                .map((item, i) => <ProductItem item={item} key={i} />)}
       </div>
     </>
   )

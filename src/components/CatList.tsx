@@ -52,7 +52,7 @@ export default function CatList() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {catList.map((cat, index) => (
-            <div className="relative">
+            <div className="relative" key={index}>
               <img
                 className="w-full h-80 object-cover"
                 src={cat.image}
