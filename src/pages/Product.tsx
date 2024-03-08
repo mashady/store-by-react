@@ -14,6 +14,7 @@ import {
   selectQuantity,
 } from "../features/cart/cartSlice"
 import { IoMdAdd, IoMdRemove } from "react-icons/io"
+import { addWish } from "../features/wishlist/wishlistSlice"
 let prod_placeholder =
   "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
@@ -128,6 +129,12 @@ export default function Product() {
                 {product.size}
               </div>
             </div>
+            <span
+              onClick={() => dispatch(addWish({ products: product }))}
+              className="cursor-pointer"
+            >
+              Save to wishlist
+            </span>
             {Index < 0 ? (
               <button
                 onClick={handleAddProduct}

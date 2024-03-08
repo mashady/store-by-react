@@ -59,7 +59,14 @@ export const cartSlice = createAppSlice({
       state.quantity += 1
       state.total += action.payload.products.price
     },
-
+    removeCart: (state, action) => {
+      const itemIndex = state.products.findIndex(
+        (i: any) => i._id === action.payload.products._id,
+      )
+      state.products.splice(itemIndex, 1)
+      state.quantity = 0
+      state.total = 0
+    },
     decreaseQuantity: (state, action) => {
       const itemIndex = state.products.findIndex(
         (i: any) => i._id === action.payload.products._id,
@@ -94,8 +101,13 @@ export const cartSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { addProduct, decreaseQuantity, increaseQuantity, clearCart } =
-  cartSlice.actions
+export const {
+  addProduct,
+  decreaseQuantity,
+  increaseQuantity,
+  clearCart,
+  removeCart,
+} = cartSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const { selectProducts, selectQuantity, selectTotal } =

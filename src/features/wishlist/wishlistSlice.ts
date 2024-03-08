@@ -23,7 +23,12 @@ export const wishlistSlice = createAppSlice({
       state.products.push(modedProduct)
       state.quantity += 1
     },
-
+    removeWish: (state, action) => {
+      const itemIndex = state.products.findIndex(
+        (i: any) => i._id === action.payload.products._id,
+      )
+      state.products.splice(itemIndex, 1)
+    },
     clearWish: state => {
       state.products = []
       state.quantity = 0
@@ -39,7 +44,7 @@ export const wishlistSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { addWish, clearWish } = wishlistSlice.actions
+export const { addWish, clearWish, removeWish } = wishlistSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const { selectProducts, selectQuantity } = wishlistSlice.selectors
