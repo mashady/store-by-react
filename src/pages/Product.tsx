@@ -7,9 +7,13 @@ import { useAppDispatch, useAppSelector } from "../app/hooks"
 
 import {
   addProduct,
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
   selectProducts,
   selectQuantity,
 } from "../features/cart/cartSlice"
+import { IoMdAdd, IoMdRemove } from "react-icons/io"
 let prod_placeholder =
   "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
@@ -19,10 +23,12 @@ export default function Product() {
   const location = useLocation()
   const id = location.pathname.split("/")[2]
   const [product, setProduct] = useState([])
-  const [quantity, setQuantity] = useState(2)
+  const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
+  const [existInCart, setExistInCart] = useState(false)
   const quantityValue = Number(quantity) || 0
+  const Index = cartProd.findIndex((i: any) => i._id === product._id)
 
   const dispatch = useAppDispatch()
 
@@ -39,36 +45,50 @@ export default function Product() {
     }
     getProduct()
   }, [id])
-  const handleQuantity = type => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1)
-    } else {
-      setQuantity(quantity + 1)
-    }
+
+  const handleDecsrese = () => {
+    dispatch(
+      decreaseQuantity({
+        products: product,
+      }),
+    )
+  }
+  const handleClear = () => {
+    dispatch(clearCart())
   }
   const handleAddProduct = async () => {
-    if (cartCheck(product._id)) {
-      // increase quantity
-
-      dispatch(addProduct({ ...product, prodQuantity: 2 }))
+    const Index = cartProd.findIndex((i: any) => i._id === product._id)
+    console.log(Index)
+    if (Index >= 0) {
+      console.log("exist")
+      setExistInCart(true)
+      let x = cartProd[Index].cartQuantity
+      setQuantity(x)
     } else {
       dispatch(
         addProduct({
-          products: { ...product, prodQuantity: 1 },
+          products: product,
           quantity: quantity,
         }),
       )
-      //console.log(cartQuant) // i cannot see you
+      //let x = cartProd[Index].cartQuantity
+      //setQuantity(x)
+      setExistInCart(true)
     }
   }
-  let cartCheck = x => {
-    for (let i = 0; cartProd.length > 0; i++) {
-      if (cartProd[i]._id === x) {
-        return true
-      }
+  const handleTestAddProduct = async () => {
+    let x = cartProd[Index].cartQuantity
+    setQuantity(x)
+    console.log(x)
+    if (Index >= 0) {
+      console.log("exist")
+      setExistInCart(true)
     }
-    return false
+    if (Index === -1) {
+      console.log("not exist")
+    }
   }
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2  gap-6  p-6 max-w-[1140px] mx-auto my-14">
@@ -82,7 +102,12 @@ export default function Product() {
         <div>
           <div className="border-b-[1px] border-opacity-50 border-[#252525] mb-2">
             <div className="text-sec">{product.categories}</div>
-            <h1 className="text-3xl text-main mb-4">{product.title}</h1>
+            <h1
+              className="text-3xl text-main mb-4"
+              onClick={handleTestAddProduct}
+            >
+              {product.title}
+            </h1>
             <div className="flex items-center">
               <Rating
                 className="flex mt-[4px] mr-2 justify-center items-center"
@@ -103,19 +128,53 @@ export default function Product() {
                 {product.size}
               </div>
             </div>
-            <button className="bg-main w-full h-12 text-white rounded text-lg">
-              Checkout
-            </button>
+            {Index < 0 ? (
+              <button
+                onClick={handleAddProduct}
+                className="bg-white mb-6 w-full h-12 text-main border-[1px] border-[#252525] border-opacity-50 rounded text-lg mt-2"
+              >
+                Add to cart
+              </button>
+            ) : (
+              <div className=" w-[100px] h-[70px] flex justify-center items-center border-[1px] rounded mb-2">
+                <div className="">
+                  <div className="flex justify-center items-center">
+                    <span
+                      onClick={() =>
+                        dispatch(
+                          increaseQuantity({
+                            products: product,
+                          }),
+                        )
+                      }
+                      className=" text-main cursor-pointer text-xl bg-main p-[2px] rounded mr-2"
+                    >
+                      <IoMdAdd className="text-white" />
+                    </span>
+                    <span className="text-lg">
+                      {cartProd[Index].cartQuantity}
+                    </span>
+                    <span
+                      onClick={() =>
+                        dispatch(decreaseQuantity({ products: product }))
+                      }
+                      className=" text-main cursor-pointer text-xl bg-main p-[2px] rounded ml-2"
+                    >
+                      <IoMdRemove className="text-white" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
             <button
-              onClick={handleAddProduct}
-              className="bg-white mb-6 w-full h-12 text-main border-[1px] border-[#252525] border-opacity-50 rounded text-lg mt-2"
+              onClick={handleClear}
+              className="bg-main w-full h-12 text-white rounded text-lg mb-6"
             >
-              Add to cart
+              Checkout
             </button>
           </div>
           <div>
             <span className="text font-bold text-main">Details</span>
-            {cartQuant}
             <p className="text-sec">{product.desc}</p>
           </div>
         </div>

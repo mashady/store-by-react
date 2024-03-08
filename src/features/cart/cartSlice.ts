@@ -24,11 +24,63 @@ export const cartSlice = createAppSlice({
 
   reducers: {
     addProduct: (state, action) => {
-      state.quantity += 1
-      state.products.push(action.payload.products)
-      console.log(action.payload.products._id)
+      // this statement will be replaced
+      /*
+      const itemIndex = state.products.findIndex(
+        (i: any) => i._id === action.payload.products._id,
+      )
+      if (itemIndex >= 0) {
+        state.products[itemIndex].cartQuantity += 1
 
+        state.total += state.quantity * state.products[itemIndex].cartQuantity
+      } else {
+
+
+
+        const modedProduct = { ...action.payload.products, cartQuantity: 1 }
+        state.products.push(modedProduct)
+        state.total += action.payload.products.price * action.payload.quantity
+      }
+*/
+
+      const modedProduct = { ...action.payload.products, cartQuantity: 1 }
+      state.products.push(modedProduct)
       state.total += action.payload.products.price * action.payload.quantity
+      state.quantity += 1
+    },
+
+    increaseQuantity: (state, action) => {
+      const itemIndex = state.products.findIndex(
+        (i: any) => i._id === action.payload.products._id,
+      )
+      if (itemIndex >= 0) {
+        state.products[itemIndex].cartQuantity += 1
+      }
+      state.quantity += 1
+      state.total += action.payload.products.price
+    },
+
+    decreaseQuantity: (state, action) => {
+      const itemIndex = state.products.findIndex(
+        (i: any) => i._id === action.payload.products._id,
+      )
+      if (itemIndex >= 0) {
+        state.products[itemIndex].cartQuantity -= 1
+      }
+      state.quantity -= 1
+      if (state.products[itemIndex].cartQuantity === 0) {
+        if (itemIndex > -1) {
+          // only splice array when item is found
+          state.products.splice(itemIndex, 1) // 2nd parameter means remove one item only
+        }
+        state.total = 0
+      }
+      state.total -= action.payload.products.price
+    },
+    clearCart: state => {
+      state.products = []
+      state.total = 0
+      state.quantity = 0
     },
   },
 
@@ -42,7 +94,8 @@ export const cartSlice = createAppSlice({
 })
 
 // Action creators are generated for each case reducer function.
-export const { addProduct } = cartSlice.actions
+export const { addProduct, decreaseQuantity, increaseQuantity, clearCart } =
+  cartSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const { selectProducts, selectQuantity, selectTotal } =
