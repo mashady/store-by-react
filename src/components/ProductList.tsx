@@ -2,12 +2,27 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link, useLocation } from "react-router-dom"
 import { FaHeart } from "react-icons/fa"
+import Paginate from "./Pagination"
 import ProductItem from "./ProductItem"
 
 export default function ProductList({ cat, filters, sort }: any) {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
   const location = useLocation()
+
+  const [blogPosts, setBlogPosts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage] = useState(8)
+
+  // ...
+
+  const indexOfLastPost = currentPage * postsPerPage
+  const indexOfFirstPost = indexOfLastPost - postsPerPage
+  const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = (pageNumber: any) => {
+    setCurrentPage(pageNumber)
+  }
 
   useEffect(() => {
     if (location.pathname.split("/")[2] === undefined) {
@@ -68,11 +83,17 @@ export default function ProductList({ cat, filters, sort }: any) {
             ))
           : location.pathname.split("/")[2] === undefined &&
               location.pathname.split("/")[1] === "products"
-            ? products.map((item, i) => <ProductItem item={item} key={i} />)
+            ? currentPosts.map((item, i) => <ProductItem item={item} key={i} />)
             : products
                 .slice(0, 8)
                 .map((item, i) => <ProductItem item={item} key={i} />)}
       </div>
+      <Paginate
+        postsPerPage={postsPerPage}
+        totalPosts={products.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </>
   )
 }

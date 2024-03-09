@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import { FaHeart } from "react-icons/fa"
+import { useState } from "react"
+import Paginate from "./Pagination"
 export default function ProdList() {
   let catList: any[] = [
     {
@@ -39,6 +41,7 @@ export default function ProdList() {
       link: "books",
     },
   ]
+
   return (
     <>
       <div className="p-6">

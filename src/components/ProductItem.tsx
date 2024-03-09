@@ -1,7 +1,22 @@
 import { FaHeart } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import Paginate from "./Pagination"
+import { useState } from "react"
 
 export default function ProductItem({ item }: any) {
+  const [blogPosts, setBlogPosts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage] = useState(3)
+
+  // ...
+
+  const indexOfLastPost = currentPage * postsPerPage
+  const indexOfFirstPost = indexOfLastPost - postsPerPage
+  const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = (pageNumber: any) => {
+    setCurrentPage(pageNumber)
+  }
   return (
     <div className="relative">
       <Link to={`/product/${item._id}`}>

@@ -38,7 +38,7 @@ export const wishlistSlice = createAppSlice({
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
   selectors: {
-    selectProducts: cart => cart.products,
+    selectWishes: cart => cart.products,
     selectQuantity: cart => cart.quantity,
   },
 })
@@ -47,4 +47,4 @@ export const wishlistSlice = createAppSlice({
 export const { addWish, clearWish, removeWish } = wishlistSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectProducts, selectQuantity } = wishlistSlice.selectors
+export const { selectWishes, selectQuantity } = wishlistSlice.selectors

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks"
 import {
   addWish,
   clearWish,
-  selectProducts,
+  selectWishes,
   selectQuantity,
   removeWish,
 } from "../features/wishlist/wishlistSlice"
@@ -14,7 +14,7 @@ let prod_placeholder =
 
 export default function Wishlist() {
   const dispatch = useAppDispatch()
-  const wishlist = useAppSelector(selectProducts)
+  const wishlist = useAppSelector(selectWishes)
   console.log(wishlist)
 
   return (
