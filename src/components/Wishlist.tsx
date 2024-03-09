@@ -19,7 +19,7 @@ export default function Wishlist() {
 
   return (
     <>
-      <div className="max-w-[900px] min-h-[70vh] mx-auto ">
+      <div className="max-w-[900px] min-h-[70vh] mx-auto p-6">
         {wishlist.length === 0 && <div>Your wishlist is empty</div>}
 
         {wishlist.map((wish: any, index: any) => (
