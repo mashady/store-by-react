@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { Link, useLocation } from "react-router-dom"
-import { FaHeart } from "react-icons/fa"
+import {  useLocation } from "react-router-dom"
 import Paginate from "./Pagination"
 import ProductItem from "./ProductItem"
 
@@ -10,7 +9,6 @@ export default function ProductList({ cat, filters, sort }: any) {
   const [filteredProducts, setFilteredProducts] = useState([])
   const location = useLocation()
 
-  const [blogPosts, setBlogPosts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(8)
 

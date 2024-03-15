@@ -40,7 +40,7 @@ export default function Product() {
   )
 
   const dispatch = useAppDispatch()
-
+  // replace it and get data from globel store
   useEffect(() => {
     const getProduct = async () => {
       try {
