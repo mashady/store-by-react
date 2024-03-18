@@ -58,7 +58,9 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex items-center text-[23px]">
-          <IoIosSearch className="text-[26px] ml-2 cursor-pointer" />
+          <Link to="/products">
+            <IoIosSearch className="text-[26px] ml-2 cursor-pointer" />
+          </Link>
           <div className="group relative  h-full text-center">
             <FiUser className="ml-2 cursor-pointer" />
             <div className="group-hover:inline-block  hidden  absolute  w-[150px]  z-10 top-6 right-0 pt-[1.9rem] ">

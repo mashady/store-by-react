@@ -2,7 +2,6 @@ import Rating from "react-rating"
 import { FaStar } from "react-icons/fa"
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { publicRequest, userRequest } from "../requestMethod"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 
 import {
@@ -19,16 +18,14 @@ import {
   selectWishes,
   removeWish,
 } from "../features/wishlist/wishlistSlice"
-let prod_placeholder =
-  "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 
-export default function Product() {
+export default function Product(): JSX.Element {
   const cartProd = useAppSelector(selectProducts)
   const wishSelcctor = useAppSelector(selectWishes)
   let cartQuant = useAppSelector(selectQuantity)
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState<any>([])
   const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
@@ -42,17 +39,12 @@ export default function Product() {
   const dispatch = useAppDispatch()
   // replace it and get data from globel store
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/products/find/" + id)
-        console.log(res)
-
-        setProduct(res.data)
-      } catch {
-        console.log("err")
-      }
-    }
-    getProduct()
+    fetch(`https://ecommerce.routemisr.com/api/v1/products/` + id)
+      .then(response => response.json())
+      .then(data => {
+        setProduct(data.data)
+        console.log(data.data)
+      })
   }, [id])
 
   const handleDecsrese = () => {
@@ -103,14 +95,14 @@ export default function Product() {
       <div className="grid grid-cols-1 md:grid-cols-2  gap-6  p-6 max-w-[1140px] mx-auto my-14">
         <div className="">
           <img
-            src={product.img}
+            src={product.imageCover}
             className="h-[70vh] w-full rounded-xl object-contain"
             alt=""
           />
         </div>
         <div>
-          <div className="border-b-[1px] border-opacity-50 border-[#252525] mb-2">
-            <div className="text-sec">{product.categories}</div>
+          <div className="border-b-[1px] border-opasizcity-50 border-[#252525] mb-2">
+            <div className="text-sec">{product?.category?.name}</div>
             <h1
               className="text-3xl text-main mb-4"
               onClick={handleTestAddProduct}
@@ -118,6 +110,7 @@ export default function Product() {
               {product.title}
             </h1>
             <div className="flex items-center">
+              {/* @ts-expect-error Server Component */}
               <Rating
                 className="flex mt-[4px] mr-2 justify-center items-center"
                 initialRating={4}
@@ -131,12 +124,7 @@ export default function Product() {
             <div className="text-xl text-main mb-12">
               LE {product.price} EGP
             </div>
-            <div>
-              <div className="text-sec">size</div>
-              <div className="mt-[2px] text-sm mb-4 w-[35px] h-[35px] flex justify-center items-center rounded border-opacity-90 border-2 border-[#252525]">
-                {product.size}
-              </div>
-            </div>
+
             {IndexForWishList < 0 ? (
               <span
                 onClick={() => dispatch(addWish({ products: product }))}
@@ -200,7 +188,7 @@ export default function Product() {
           </div>
           <div>
             <span className="text font-bold text-main">Details</span>
-            <p className="text-sec">{product.desc}</p>
+            <p className="text-sec">{product.description}</p>
           </div>
         </div>
       </div>

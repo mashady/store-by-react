@@ -52,7 +52,7 @@ export default function Cart() {
                       >
                         <div className="flex ">
                           <img
-                            src={item.img}
+                            src={item.imageCover}
                             alt=""
                             className="w-16 rounded mr-4"
                           />

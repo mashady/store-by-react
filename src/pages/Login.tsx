@@ -52,7 +52,7 @@ export default function Login() {
           Login
         </button>
         <span className="underline cursor-pointer">
-          <Link to="">create an account</Link>
+          <Link to="/register">create an account</Link>
         </span>
       </div>
     </>

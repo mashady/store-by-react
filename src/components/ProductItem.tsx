@@ -22,7 +22,7 @@ export default function ProductItem({ item }: any) {
       <Link to={`/product/${item._id}`}>
         <img
           className="w-full h-80 object-contain rounded"
-          src={item.img}
+          src={item.imageCover}
           alt=""
         />
       </Link>

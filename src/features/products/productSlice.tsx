@@ -14,12 +14,7 @@ export interface ProductSliceState {
 }
 
 const initialState: ProductSliceState = {
-  products: [
-    {
-      id: "00000",
-      name: "test product",
-    },
-  ],
+  products: [],
   quantity: 0,
 }
 
@@ -31,33 +26,20 @@ export const productSlice = createAppSlice({
   // The `reducers` field lets us define reducers and generate associated actions
 
   reducers: {
-    addWish: (state, action) => {
-      const modedProduct = { ...action.payload.products, cartQuantity: 1 }
-      state.products.push(modedProduct)
-      state.quantity += 1
-    },
-    removeWish: (state, action) => {
-      const itemIndex = state.products.findIndex(
-        (i: any) => i._id === action.payload.products._id,
-      )
-      state.products.splice(itemIndex, 1)
-    },
-    clearWish: state => {
-      state.products = []
-      state.quantity = 0
+    fetchedPorducts: (state, action) => {
+      state.products = action.payload.products
     },
   },
 
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
   selectors: {
-    selectWishes: cart => cart.products,
-    selectQuantity: cart => cart.quantity,
+    selectProducts: products => products.products,
   },
 })
 
 // Action creators are generated for each case reducer function.
-export const { addWish, clearWish, removeWish } = productSlice.actions
+export const { fetchedPorducts } = productSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectWishes, selectQuantity } = productSlice.selectors
+export const { selectProducts } = productSlice.selectors

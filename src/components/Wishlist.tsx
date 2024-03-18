@@ -26,7 +26,11 @@ export default function Wishlist() {
           <div className="col-span-2 p-4 rounded-lg border-[1px] border-[#252525] border-opacity-50 mb-2">
             <div className="flex items-center justify-between  pb-4">
               <div className="flex ">
-                <img src={wish.img} alt="" className="w-16 rounded mr-4" />
+                <img
+                  src={wish.imageCover}
+                  alt=""
+                  className="w-16 rounded mr-4"
+                />
                 <div>
                   <h3 className="text-2xl text-main">{wish.title}</h3>
                   <div className="text-sec text-[0.9rem] mt-[4px]">
