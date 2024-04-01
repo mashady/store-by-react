@@ -6,7 +6,7 @@ ecommerce react store app 💜
 
 https://react-store-by-abu.netlify.app/
 
-## Demo Vidoe Via YouTube
+## Demo Video Via YouTube
 
 https://youtu.be/MEbZITZpuXg
 
