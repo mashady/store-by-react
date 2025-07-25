@@ -17,14 +17,26 @@ export default function Home() {
   useEffect(() => {
     console.log(productSelector)
     if (productSelector.length <= 0) {
-      fetch("https://ecommerce.routemisr.com/api/v1/products")
+      // fetch("https://ecommerce.routemisr.com/api/v1/products")
+      fetch("http://localhost:8000/api/products/")
         .then(response => response.json())
+        // .then(data => {
+        //   console.log(data)
+        //   setProducts(data.data)
+        //   console.log(data.data)
+        //   dispatch(
+        //     fetchedPorducts({
+        //       products: data.data,
+        //     }),
+        //   )
+        // })
         .then(data => {
-          setProducts(data.data)
-          console.log(data.data)
+          console.log(data)
+          setProducts(data)
+          console.log(data)
           dispatch(
             fetchedPorducts({
-              products: data.data,
+              products: data,
             }),
           )
         })
@@ -37,7 +49,7 @@ export default function Home() {
       <Header />
       <ProductList products={products} />
       <CatList />
-      <News />
+      {/* <News /> */}
     </>
   )
 }

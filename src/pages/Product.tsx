@@ -39,11 +39,17 @@ export default function Product(): JSX.Element {
   const dispatch = useAppDispatch()
   // replace it and get data from globel store
   useEffect(() => {
-    fetch(`https://ecommerce.routemisr.com/api/v1/products/` + id)
+    // fetch(`https://ecommerce.routemisr.com/api/v1/products/` + id)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setProduct(data.data)
+    //     console.log(data.data)
+    //   })
+    fetch(`http://localhost:8000/api/products/` + id)
       .then(response => response.json())
       .then(data => {
-        setProduct(data.data)
-        console.log(data.data)
+        setProduct(data)
+        console.log(data)
       })
   }, [id])
 
@@ -95,7 +101,7 @@ export default function Product(): JSX.Element {
       <div className="grid grid-cols-1 md:grid-cols-2  gap-6  p-6 max-w-[1140px] mx-auto my-14">
         <div className="">
           <img
-            src={product.imageCover}
+            src={product.cover}
             className="h-[70vh] w-full rounded-xl object-contain"
             alt=""
           />
@@ -107,7 +113,7 @@ export default function Product(): JSX.Element {
               className="text-3xl text-main mb-4"
               onClick={handleTestAddProduct}
             >
-              {product.title}
+              {product.name}
             </h1>
             <div className="flex items-center">
               {/* @ts-expect-error Server Component */}
@@ -118,7 +124,7 @@ export default function Product(): JSX.Element {
                 fullSymbol={<FaStar color="#febb02" />}
                 readonly
               />{" "}
-              <span className="text-sec">(111 reviews)</span>
+              {/* <span className="text-sec">(111 reviews)</span> */}
             </div>
 
             <div className="text-xl text-main mb-12">
@@ -179,15 +185,15 @@ export default function Product(): JSX.Element {
                 </div>
               </div>
             )}
-            <button
+            {/* <button
               onClick={handleClear}
               className="bg-main w-full h-12 text-white rounded text-lg mb-6"
             >
               Checkout
-            </button>
+            </button> */}
           </div>
           <div>
-            <span className="text font-bold text-main">Details</span>
+            <span className="text font-bold text-main mt-4">Details</span>
             <p className="text-sec">{product.description}</p>
           </div>
         </div>

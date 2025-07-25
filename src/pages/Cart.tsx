@@ -52,12 +52,12 @@ export default function Cart() {
                       >
                         <div className="flex ">
                           <img
-                            src={item.imageCover}
+                            src={item.cover}
                             alt=""
                             className="w-16 rounded mr-4"
                           />
                           <div>
-                            <h3 className="text-2xl text-main">{item.title}</h3>
+                            <h3 className="text-2xl text-main">{item.name}</h3>
                             <div className="text-sec text-[0.9rem] mt-[4px]">
                               <span
                                 className="cursor-pointer"
@@ -113,7 +113,7 @@ export default function Cart() {
                     ))}
                   </div>
                 </div>
-                <div className=" p-4 rounded-lg border-[1px] border-[#252525] border-opacity-50">
+                <div className="opacity-0 p-4 rounded-lg border-[1px] border-[#252525] border-opacity-50">
                   <h2 className="text-2xl mb-2">order summury</h2>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sec">Subtotal</span>

@@ -19,19 +19,19 @@ export default function ProductItem({ item }: any) {
   }
   return (
     <div className="relative">
-      <Link to={`/product/${item._id}`}>
+      <Link to={`/product/${item.id}`}>
         <img
           className="w-full h-80 object-contain rounded"
-          src={item.imageCover}
+          src={item.cover}
           alt=""
         />
       </Link>
-      <div className="group flex justify-between items-center">
-        <div className="flex flex-col text-main">
-          <span className="text-[20px] font-bold">{item.title}</span>
+      <div className="group flex justify-center items-center">
+        <div className="flex flex-col text-main text-center">
+          <span className="text-[20px] font-bold">{item.name}</span>
           <span>LE {item.price} EGP</span>
         </div>
-        <FaHeart className=" opacity-0 text-main cursor-pointer text-[19px] hover:text-[#dc3545] transition-all" />
+        {/* <FaHeart className=" opacity-1 text-main cursor-pointer text-[19px] hover:text-[#dc3545] transition-all" /> */}
       </div>
     </div>
   )
